@@ -57,6 +57,9 @@ public struct CoreDataModel: CustomStringConvertible, Equatable {
     /// The type of the Core Data persistent store for the model.
     public let storeType: StoreType
 
+    /// The name of the Core Data persistent store file for the model.
+    public let storeFileName: String?
+
     /**
      The file URL specifying the full path to the store.
 
@@ -82,8 +85,8 @@ public struct CoreDataModel: CustomStringConvertible, Equatable {
     public var databaseFileName: String {
         get {
             switch storeType {
-            case .sqlite: return name + "." + ModelFileExtension.sqlite.rawValue
-            default: return name
+            case .sqlite: return (storeFileName ?? name) + "." + ModelFileExtension.sqlite.rawValue
+            default: return (storeFileName ?? name)
             }
         }
     }
@@ -133,10 +136,11 @@ public struct CoreDataModel: CustomStringConvertible, Equatable {
 
      - returns: A new `CoreDataModel` instance.
      */
-    public init(name: String, bundle: NSBundle = .mainBundle(), storeType: StoreType = .sqlite(defaultDirectoryURL())) {
+    public init(name: String, bundle: NSBundle = .mainBundle(), storeType: StoreType = .sqlite(defaultDirectoryURL()), storeFileName: String? = nil ) {
         self.name = name
         self.bundle = bundle
         self.storeType = storeType
+        self.storeFileName = storeFileName
     }
 
 

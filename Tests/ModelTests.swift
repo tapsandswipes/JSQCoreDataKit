@@ -232,4 +232,15 @@ class ModelTests: XCTestCase {
         print(model)
     }
     
+    func test_Model_StoreFilename() {
+        let storeName = "TestStore"
+        // WHEN: we create a model
+        let model = CoreDataModel(name: modelName, bundle: modelBundle, storeFileName: storeName)
+        
+        // THEN: the model returns the correct database filename
+        XCTAssertEqual(model.storeFileName, storeName)
+        XCTAssertEqual(model.databaseFileName, storeName + "." + ModelFileExtension.sqlite.rawValue)
+        
+    }
+    
 }
