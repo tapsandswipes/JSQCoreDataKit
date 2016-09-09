@@ -31,7 +31,11 @@ import Foundation
  */
 public func saveContext(context: NSManagedObjectContext, wait: Bool = true, completion: ((SaveResult) -> Void)? = nil) {
     let block = {
-        guard context.hasChanges else { return }
+        guard context.hasChanges else {
+            completion?(.success)
+            return
+        }
+        
         do {
             try context.save()
             completion?(.success)
