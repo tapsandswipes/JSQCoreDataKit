@@ -460,7 +460,7 @@
 				TargetAttributes = {
 					88002D4E1AB8F546001787DB = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = 5VRJU68BZ5;
+						DevelopmentTeam = 22LB4KVNJZ;
 						DevelopmentTeamName = "Jesse Squires";
 						LastSwiftMigration = 0800;
 					};
@@ -818,6 +818,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 22LB4KVNJZ;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -845,6 +846,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 22LB4KVNJZ;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
