@@ -22,12 +22,11 @@ This library aims to do the following:
 > * [objc.io issue #4 on Core Data](http://www.objc.io/issue-4/)
 > * [Concurrent Core Data Stacks – Performance Shootout](http://floriankugler.com/2013/04/29/concurrent-core-data-stack-performance-shootout/)
 > * [Backstage with Nested Managed Object Contexts](http://floriankugler.com/2013/05/13/backstage-with-nested-managed-object-contexts/)
-> * [BNR core data stack](https://www.bignerdranch.com/blog/introducing-the-big-nerd-ranch-core-data-stack/)
 
 ## Requirements
 
 * Xcode 8
-* Swift 2.3
+* Swift 3.0
 * iOS 8.0+
 * OSX 10.10+
 * tvOS 9.0+
@@ -55,7 +54,19 @@ github "jessesquires/JSQCoreDataKit"
 
 ## Documentation
 
-Read the [docs][docsLink]. Generated with [jazzy](https://github.com/realm/jazzy). Hosted by [GitHub Pages](https://pages.github.com). More information on the [`gh-pages`](https://github.com/jessesquires/JSQCoreDataKit/tree/gh-pages) branch.
+Read the [docs][docsLink]. Generated with [jazzy](https://github.com/realm/jazzy). Hosted by [GitHub Pages](https://pages.github.com). 
+
+#### Generate
+
+````bash
+$ ./build_docs.sh
+````
+
+#### Preview
+
+````bash
+$ open index.html -a Safari
+````
 
 ## Getting Started
 
@@ -68,7 +79,7 @@ import JSQCoreDataKit
 ````swift
 // Initialize the Core Data model, this class encapsulates the notion of a .xcdatamodeld file
 // The name passed here should be the name of an .xcdatamodeld file
-let bundle = NSBundle(identifier: "com.MyApp.MyModelFramework")!
+let bundle = Bundle(identifier: "com.MyApp.MyModelFramework")!
 let model = CoreDataModel(name: "MyModel", bundle: bundle)
 
 // Initialize a stack with a factory
@@ -89,7 +100,7 @@ factory.createStack { (result: StackResult) in
 #### In-memory stacks for testing
 
 ````swift
-let inMemoryModel = CoreDataModel(name: myName, bundle: myBundle, storeType: .InMemory)
+let inMemoryModel = CoreDataModel(name: myName, bundle: myBundle, storeType: .inMemory)
 let factory = CoreDataStackFactory(model: inMemoryModel)
 
 let stack: CoreDataStack?
@@ -121,7 +132,7 @@ saveContext(stack.mainContext) { result in
 #### Deleting the store
 
 ````swift
-let bundle = NSBundle(identifier: "com.MyApp.MyModelFramework")!
+let bundle = Bundle(identifier: "com.MyApp.MyModelFramework")!
 let model = CoreDataModel(name: "MyModel", bundle: bundle)
 do {
     try model.removeExistingStore()
@@ -133,7 +144,7 @@ do {
 #### Performing migrations
 
 ````swift
-let bundle = NSBundle(identifier: "com.MyApp.MyModelFramework")!
+let bundle = Bundle(identifier: "com.MyApp.MyModelFramework")!
 let model = CoreDataModel(name: "MyModel", bundle: bundle)
 if model.needsMigration {
     do {
@@ -148,39 +159,10 @@ if model.needsMigration {
 
 ````swift
 // Create a main queue child context from the main context
-let childContext = stack.childContext(concurrencyType: .MainQueueConcurrencyType)
+let childContext = stack.childContext(concurrencyType: .mainQueueConcurrencyType)
 
 // Create a background queue child context from the background context
-let childContext = stack.childContext(concurrencyType: .PrivateQueueConcurrencyType)
-````
-
-#### Fetching
-
-````swift
-// Create a FetchRequest<T>, where T is a phantom type
-let entity = entity(name: "MyModel", context: context)!
-let request = FetchRequest<MyModel>(entity: entity)
-
-var results = [MyModel]()
-do {
-    results = try stack.mainContext.fetch(request: request)
-}
-catch {
-    print("Fetch error: \(error)")
-}
-
-print("Results = \(results)")
-````
-
-#### Deleting
-
-````swift
-let objects: [MyModel] = /* array of MyModel objects */
-
-stack.mainContext.delete(objects: objects)
-
-// Commit changes to remove objects from store
-saveContext(context)
+let childContext = stack.childContext(concurrencyType: .privateQueueConcurrencyType)
 ````
 
 ## Example app
